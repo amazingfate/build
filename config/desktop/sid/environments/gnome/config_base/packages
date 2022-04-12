@@ -29,7 +29,7 @@ gir1.2-gnomebluetooth-1.0
 gir1.2-gnomedesktop-3.0
 gir1.2-goa-1.0
 gir1.2-graphene-1.0
-gir1.2-gweather-3.0
+gir1.2-gweather-4.0
 gir1.2-ibus-1.0
 gir1.2-json-1.0
 gir1.2-mutter-10
@@ -105,8 +105,8 @@ libgs9-common
 libgsf-1-114
 libgsf-1-common
 libgtk3-perl
-libgweather-3-16
-libgweather-common
+libgweather-4-0
+libgweather-4-common
 libgxps2
 libibus-1.0-5
 libical3
