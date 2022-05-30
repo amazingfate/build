@@ -171,14 +171,14 @@ uboot_custom_postprocess() {
 	if [[ $BOOT_SUPPORT_SPI == yes ]]; then
 		if [[ $BOARD == "rock-3a" ]]; then
 			dd if=/dev/zero of=rkspi_loader.img bs=1M count=0 seek=16 status=none
-			/sbin/parted -s rkspi_loader.img mklabel gpt
-			/sbin/parted -s rkspi_loader.img unit s mkpart idbloader 64 7167
-			/sbin/parted -s rkspi_loader.img unit s mkpart vnvm 7168 7679
-			/sbin/parted -s rkspi_loader.img unit s mkpart reserved_space 7680 8063
-			/sbin/parted -s rkspi_loader.img unit s mkpart reserved1 8064 8127
-			/sbin/parted -s rkspi_loader.img unit s mkpart uboot_env 8128 8191
-			/sbin/parted -s rkspi_loader.img unit s mkpart reserved2 8192 16383
-			/sbin/parted -s rkspi_loader.img unit s mkpart uboot 16384 32734
+			#/sbin/parted -s rkspi_loader.img mklabel gpt
+			#/sbin/parted -s rkspi_loader.img unit s mkpart idbloader 64 7167
+			#/sbin/parted -s rkspi_loader.img unit s mkpart vnvm 7168 7679
+			#/sbin/parted -s rkspi_loader.img unit s mkpart reserved_space 7680 8063
+			#/sbin/parted -s rkspi_loader.img unit s mkpart reserved1 8064 8127
+			#/sbin/parted -s rkspi_loader.img unit s mkpart uboot_env 8128 8191
+			#/sbin/parted -s rkspi_loader.img unit s mkpart reserved2 8192 16383
+			#/sbin/parted -s rkspi_loader.img unit s mkpart uboot 16384 32734
 			dd if=idbloader.img of=rkspi_loader.img seek=64 conv=notrunc status=none
 			dd if=u-boot.itb of=rkspi_loader.img seek=16384 conv=notrunc status=none
 		else
