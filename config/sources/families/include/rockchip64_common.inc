@@ -169,7 +169,7 @@ uboot_custom_postprocess() {
 	fi
 
 	if [[ $BOOT_SUPPORT_SPI == yes ]]; then
-		if [[ $BOARD == "rock-3a" ]]; then
+		if [[ $BOARD == "rock-3b" ]]; then
 			dd if=/dev/zero of=rkspi_loader.img bs=1M count=0 seek=16 status=none
 			#/sbin/parted -s rkspi_loader.img mklabel gpt
 			#/sbin/parted -s rkspi_loader.img unit s mkpart idbloader 64 7167
