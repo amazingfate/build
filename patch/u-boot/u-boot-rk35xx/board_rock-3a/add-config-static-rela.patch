@@ -1,0 +1,9 @@
+diff --git a/configs/rock-3-a-rk3568_defconfig b/configs/rock-3-a-rk3568_defconfig
+index 7a546008..fcf9ce97 100644
+--- a/configs/rock-3-a-rk3568_defconfig
++++ b/configs/rock-3-a-rk3568_defconfig
+@@ -218,3 +218,4 @@ CONFIG_AVB_LIBAVB_USER=y
+ CONFIG_RK_AVB_LIBAVB_USER=y
+ CONFIG_OPTEE_CLIENT=y
+ CONFIG_OPTEE_V2=y
++CONFIG_STATIC_RELA=y
