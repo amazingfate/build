@@ -100,7 +100,7 @@ current)
 edge)
 
 	KERNELPATCHDIR='rockchip64-'$BRANCH
-	KERNELBRANCH="branch:linux-5.18.y"
+	KERNELBRANCH="tag:v5.19-rc1"
 	LINUXFAMILY=rockchip64
 	LINUXCONFIG='linux-rockchip64-'$BRANCH
 
