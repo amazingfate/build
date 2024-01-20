@@ -1,0 +1,12 @@
+# Rockchip RK3568 quad core 1-8GB SoC GBe eMMC USB3
+BOARD_NAME="R68A Q2"
+BOARDFAMILY="rk35xx"
+BOOTCONFIG="radxa-e25-rk3568_defconfig"
+KERNEL_TARGET="legacy"
+FULL_DESKTOP="yes"
+BOOT_LOGO="desktop"
+BOOT_FDT_FILE="rockchip/rk3568-r68a-q2.dtb"
+BOOT_SCENARIO="spl-blobs"
+WIREGUARD="no"
+IMAGE_PARTITION_TABLE="gpt"
+BOOTFS_TYPE="fat"
