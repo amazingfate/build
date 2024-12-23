@@ -86,46 +86,6 @@ index 000000000000..111111111111
 Armbian
 
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Corentin Labbe <clabbe@baylibre.com>
-Date: Tue, 7 Nov 2023 15:55:30 +0000
-Subject: ARM64: dts: rk356x: add crypto node
-
-Both RK3566 and RK3568 have a crypto IP handled by the rk3588 crypto driver so adds a
-node for it.
-
-Tested-by: Ricardo Pardini <ricardo@pardini.net>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
----
- arch/arm64/boot/dts/rockchip/rk356x.dtsi | 12 ++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-index 111111111111..222222222222 100644
---- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -1122,6 +1122,18 @@ rng: rng@fe388000 {
- 		status = "disabled";
- 	};
- 
-+	crypto: crypto@fe380000 {
-+		compatible = "rockchip,rk3568-crypto";
-+		reg = <0x0 0xfe380000 0x0 0x2000>;
-+		interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
-+		clocks = <&cru ACLK_CRYPTO_NS>, <&cru HCLK_CRYPTO_NS>,
-+			 <&cru CLK_CRYPTO_NS_CORE>;
-+		clock-names = "aclk", "hclk", "core";
-+		resets = <&cru SRST_CRYPTO_NS_CORE>;
-+		reset-names = "core";
-+		status = "okay";
-+	};
-+
- 	i2s0_8ch: i2s@fe400000 {
- 		compatible = "rockchip,rk3568-i2s-tdm";
- 		reg = <0x0 0xfe400000 0x0 0x1000>;
--- 
-Armbian
-
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Muhammed Efe Cetin <efectn@protonmail.com>
 Date: Fri, 2 Aug 2024 00:05:59 +0300
 Subject: arm64: dts: rockchip: rk3588: enable crypto node
@@ -138,7 +98,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi b/arch/arm64/boot/dts
 index 111111111111..222222222222 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
-@@ -1879,6 +1879,17 @@ sdhci: mmc@fe2e0000 {
+@@ -1920,6 +1920,17 @@ sdhci: mmc@fe2e0000 {
  		status = "disabled";
  	};
  
@@ -340,7 +300,7 @@ diff --git a/drivers/crypto/Kconfig b/drivers/crypto/Kconfig
 index 111111111111..222222222222 100644
 --- a/drivers/crypto/Kconfig
 +++ b/drivers/crypto/Kconfig
-@@ -714,6 +714,35 @@ config CRYPTO_DEV_TEGRA
+@@ -735,6 +735,35 @@ config CRYPTO_DEV_TEGRA
  	  Select this to enable Tegra Security Engine which accelerates various
  	  AES encryption/decryption and HASH algorithms.
  

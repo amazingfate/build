@@ -1,19 +1,17 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 509f1c7905fdf603e596681f2e933c9c2bab1ee3 Mon Sep 17 00:00:00 2001
 From: Muhammed Efe Cetin <efectn@protonmail.com>
-Date: Mon, 12 Feb 2024 17:35:13 +0300
-Subject: arm64: dts: rockchip: Add USB-C to Khadas Edge 2
+Date: Tue, 10 Dec 2024 20:54:33 +0300
+Subject: [PATCH 1/3] arm64: dts: rockchip: Add USB-C to Khadas Edge 2
 
 Khadas Edge 2 has 2x Type-C port. One just supports PD and
 controlled by MCU. The other one supports PD, DP Alt mode and DRD. This
 commit adds support for DRD.
-
-Signed-off-by: Muhammed Efe Cetin <efectn@protonmail.com>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts | 120 ++++++++++
- 1 file changed, 120 insertions(+)
+ .../dts/rockchip/rk3588s-khadas-edge2.dts     | 119 ++++++++++++++++++
+ 1 file changed, 119 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-index 111111111111..222222222222 100644
+index ac48e7fd3923..d55a91302f68 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
 @@ -6,6 +6,7 @@
@@ -40,7 +38,7 @@ index 111111111111..222222222222 100644
 +		pinctrl-0 = <&typec5v_pwren>;
 +	};
 +
- 	vcc3v3_pcie_wl: vcc3v3-pcie-wl-regulator {
+ 	vcc3v3_pcie_wl: regulator-vcc3v3-pcie-wl {
  		compatible = "regulator-fixed";
  		enable-active-high;
 @@ -224,6 +237,56 @@ regulator-state-mem {
@@ -117,7 +115,7 @@ index 111111111111..222222222222 100644
  	ir-receiver {
  		ir_receiver_pin: ir-receiver-pin {
  			rockchip,pins = <1  RK_PA7  RK_FUNC_GPIO  &pcfg_pull_none>;
-@@ -681,6 +754,15 @@ &uart9 {
+@@ -697,6 +770,14 @@ &uart9 {
  	status = "okay";
  };
  
@@ -129,18 +127,16 @@ index 111111111111..222222222222 100644
 +	status = "okay";
 +};
 +
-+
  &u2phy2 {
  	status = "okay";
  };
-@@ -707,6 +789,44 @@ &usb_host0_ohci {
+@@ -723,6 +804,44 @@ &usb_host0_ohci {
  	status = "okay";
  };
  
 +&usbdp_phy0 {
 +	orientation-switch;
 +	mode-switch;
-+	svid = <0xff01>;
 +	sbu1-dc-gpios = <&gpio4 RK_PA0 GPIO_ACTIVE_HIGH>;
 +	sbu2-dc-gpios = <&gpio4 RK_PA1 GPIO_ACTIVE_HIGH>;
 +	status = "okay";
@@ -175,26 +171,29 @@ index 111111111111..222222222222 100644
 +	};
 +};
 +
++
  &usb_host1_ehci {
  	status = "okay";
  };
 -- 
-Armbian
+2.47.1
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+
+From 1c658581d83dfdad45ae3181d2d239c617f7b45c Mon Sep 17 00:00:00 2001
 From: Muhammed Efe Cetin <efectn@protonmail.com>
-Date: Mon, 12 Feb 2024 17:35:13 +0300
-Subject: arm64: dts: rockchip: Add bluetooth support to Khadas Edge 2
+Date: Tue, 10 Dec 2024 20:57:42 +0300
+Subject: [PATCH 2/3] arm64: dts: rockchip: Add bluetooth support to Khadas
+ Edge 2
 
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts | 18 +++++++++-
+ .../boot/dts/rockchip/rk3588s-khadas-edge2.dts | 18 +++++++++++++++++-
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-index 111111111111..222222222222 100644
+index d55a91302f68..f5971e27526d 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-@@ -750,8 +750,24 @@ &uart2 {
+@@ -766,8 +766,24 @@ &uart2 {
  
  &uart9 {
  	pinctrl-names = "default";
@@ -221,29 +220,30 @@ index 111111111111..222222222222 100644
  
  &u2phy0 {
 -- 
-Armbian
+2.47.1
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+
+From f734fc304914f25a763f2c7a77df8ba0228b76fd Mon Sep 17 00:00:00 2001
 From: Muhammed Efe Cetin <efectn@protonmail.com>
-Date: Mon, 19 Feb 2024 23:32:11 +0300
-Subject: arm64: dts: rockchip: Add HDMI & VOP2 to Khadas Edge 2
+Date: Tue, 10 Dec 2024 21:00:25 +0300
+Subject: [PATCH 3/3] arm64: dts: rockchip: Add HDMI & VOP2 to Khadas Edge 2
 
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts | 53 ++++++++++
- 1 file changed, 53 insertions(+)
+ .../dts/rockchip/rk3588s-khadas-edge2.dts     | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-index 111111111111..222222222222 100644
+index f5971e27526d..fb61955979ee 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-@@ -7,6 +7,7 @@
+@@ -6,6 +6,7 @@
+ #include <dt-bindings/input/input.h>
  #include <dt-bindings/pinctrl/rockchip.h>
  #include <dt-bindings/leds/common.h>
- #include <dt-bindings/usb/pd.h>
 +#include <dt-bindings/soc/rockchip,vop2.h>
+ #include <dt-bindings/usb/pd.h>
  #include "rk3588s.dtsi"
  
- / {
 @@ -43,6 +44,17 @@ ir-receiver {
  		pinctrl-0 = <&ir_receiver_pin>;
  	};
@@ -262,19 +262,10 @@ index 111111111111..222222222222 100644
  	leds {
  		compatible = "pwm-leds";
  
-@@ -830,6 +842,7 @@ usbdp_phy0_dp_altmode_mux: endpoint@1 {
- };
- 
- &usb_host0_xhci {
-+	dr-mode = "otg";
- 	usb-role-switch;
- 	status = "okay";
- 
-@@ -854,3 +867,43 @@ &usb_host1_ohci {
- &usb_host2_xhci {
+@@ -194,6 +206,26 @@ &gpu {
  	status = "okay";
  };
-+
+ 
 +&hdmi0 {
 +	status = "okay";
 +};
@@ -295,10 +286,13 @@ index 111111111111..222222222222 100644
 +	status = "okay";
 +};
 +
-+&display_subsystem {
-+	clocks = <&hdptxphy_hdmi0>;
-+	clock-names = "hdmi0_phy_pll";
-+};
+ &i2c0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c0m2_xfer>;
+@@ -869,3 +901,18 @@ &usb_host1_ohci {
+ &usb_host2_xhci {
+ 	status = "okay";
+ };
 +
 +&vop_mmu {
 +	status = "okay";
@@ -315,45 +309,5 @@ index 111111111111..222222222222 100644
 +	};
 +};
 -- 
-Armbian
-
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Muhammed Efe Cetin <efectn@protonmail.com>
-Date: Sat, 2 Mar 2024 19:13:59 +0300
-Subject: arm64: dts: rockchip: Add AP6275P wireless support to Khadas Edge 2
-
----
- arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts | 17 ++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-index 111111111111..222222222222 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-khadas-edge2.dts
-@@ -368,6 +368,23 @@ &pcie2x1l2 {
- 	reset-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
- 	vpcie3v3-supply = <&vcc3v3_pcie_wl>;
- 	status = "okay";
-+
-+	pcie@0,0 {
-+		reg = <0x400000 0 0 0 0>;
-+		#address-cells = <3>;
-+		#size-cells = <2>;
-+		ranges;
-+		device_type = "pci";
-+		bus-range = <0x40 0x4f>;
-+
-+		wifi: wifi@0,0 {
-+			compatible = "pci14e4,449d";
-+			reg = <0x410000 0 0 0 0>;
-+			clocks = <&hym8563>;
-+			clock-names = "32k";
-+		};
-+	};
-+
- };
- 
- &pwm11 {
--- 
-Armbian
+2.47.1
 

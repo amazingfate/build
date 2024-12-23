@@ -28,7 +28,7 @@ index 111111111111..222222222222 100644
 +			compatible = "pci14e4,449d";
 +			reg = <0x310000 0 0 0 0>;
 +			clocks = <&hym8563>;
-+			clock-names = "32k";
++			clock-names = "lpo";
 +		};
 +	};
  };
