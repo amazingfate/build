@@ -1,0 +1,37 @@
+From e6157f2bbf9179a00c2cec865fffdf90c0ebae9e Mon Sep 17 00:00:00 2001
+From: Stephen <stephen@radxa.com>
+Date: Thu, 28 Jul 2022 21:33:52 +0800
+Subject: [PATCH] cmd: charge: add command charge_pd
+
+Signed-off-by: Stephen <stephen@radxa.com>
+---
+ cmd/charge.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/cmd/charge.c b/cmd/charge.c
+index e14404ed476..d1e6f1c4d6a 100644
+--- a/cmd/charge.c
++++ b/cmd/charge.c
+@@ -70,3 +70,22 @@ U_BOOT_CMD(charge, 4, 0, do_charge_display,
+ 	   "-charge\n"
+ 	   "-charge <power on soc> <power on voltage> <screen on voltage>"
+ );
++
++static int do_charge(cmd_tbl_t *cmdtp, int flag, int argc,
++			     char *const argv[])
++{
++	int ret;
++	struct udevice *dev;
++
++	ret = uclass_get_device(UCLASS_PD, 0, &dev);
++	printf("ret = %d (dev => %p)\n", ret, dev);
++
++	return 0;
++}
++
++U_BOOT_CMD(charge_pd, 1, 0, do_charge,
++	   "Charge select",
++	   "-charge_pd\n"
++	   "-charge_pd <voltage wanted> <current wanted> \n"
++);
++
