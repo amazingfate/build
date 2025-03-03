@@ -1,0 +1,50 @@
+diff --git a/drivers/media/platform/cix/linlon-aeu/Kconfig b/drivers/media/platform/cix/linlon-aeu/Kconfig
+index 796cc2f09..c7a9e2017 100644
+--- a/drivers/media/platform/cix/linlon-aeu/Kconfig
++++ b/drivers/media/platform/cix/linlon-aeu/Kconfig
+@@ -4,6 +4,8 @@ config LINLON_AEU
+ 	depends on OF && (ARM || ARM64)
+ 	depends on VIDEO_DEV
+ 	select V4L2_MEM2MEM_DEV
++	select VIDEOBUF2_DMA_CONTIG
++	select VIDEOBUF2_DMA_SG
+ 	help
+ 	  Support AEU device which could transfer the uncompressed buffer
+ 	  to compressed buffer in AFBC format.
+diff --git a/drivers/phy/cix/Kconfig b/drivers/phy/cix/Kconfig
+index 815fbbfb1..2e25ca485 100644
+--- a/drivers/phy/cix/Kconfig
++++ b/drivers/phy/cix/Kconfig
+@@ -5,7 +5,7 @@
+ 
+ config PHY_CIX_USBDP
+ 	tristate "Cix USBDP PHY Driver"
+-	depends on OF && HAS_IOMEM
++	depends on OF && HAS_IOMEM && MFD_SYSCON
+ 	select GENERIC_PHY
+ 	help
+ 	  Enable this to support the CIX USBDP PHY for TYPEC Connection
+diff --git a/drivers/soc/cix/cix_dst/dst_fdleak_main.c b/drivers/soc/cix/cix_dst/dst_fdleak_main.c
+index e20ea2ab5..45e5dfddb 100755
+--- a/drivers/soc/cix/cix_dst/dst_fdleak_main.c
++++ b/drivers/soc/cix/cix_dst/dst_fdleak_main.c
+@@ -18,7 +18,9 @@
+ 
+ #include <linux/soc/cix/dst_fdleak.h>
+ 
++#include <linux/compat.h>
+ #include <linux/sched.h>
++#include <linux/sched/task_stack.h>
+ #include <linux/module.h>
+ #include <asm/ioctls.h>
+ #include <linux/poll.h>
+diff --git a/drivers/soc/cix/cix_dst/dst_sdei_tfa_trace.c b/drivers/soc/cix/cix_dst/dst_sdei_tfa_trace.c
+index adb428eb0..06fa809f2 100755
+--- a/drivers/soc/cix/cix_dst/dst_sdei_tfa_trace.c
++++ b/drivers/soc/cix/cix_dst/dst_sdei_tfa_trace.c
+@@ -1,4 +1,5 @@
+ #include <linux/arm_sdei.h>
++#include <linux/memblock.h>
+ #include <asm/cacheflush.h>
+ #include <linux/soc/cix/rdr_platform.h>
+ #include "dst_print.h"
