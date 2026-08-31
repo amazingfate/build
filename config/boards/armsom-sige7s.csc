@@ -9,14 +9,33 @@ KERNEL_TARGET="edge"
 FULL_DESKTOP="yes"
 BOOT_LOGO="desktop"
 BOOT_FDT_FILE="rockchip/rk3588s-armsom-sige7s.dtb"
-BOOT_SCENARIO="spl-blobs"
 BOOT_SUPPORT_SPI="yes"
 BOOT_SPI_RKSPI_LOADER="yes"
 IMAGE_PARTITION_TABLE="gpt"
 
-# @TODO: consider removing those, as the defaults in rockchip64_common have been bumped up
-DDR_BLOB='rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.11.bin'
-BL31_BLOB='rk35/rk3588_bl31_v1.38.elf'
+# For current/edge branches:
+display_alert "$BOARD" "applying mainline configuration for $BOARD / $BRANCH" "info"
+declare -g BOOT_SCENARIO="tpl-blob-atf-mainline" # Mainline ATF
+declare -g BOOT_SOC="rk3588"
+
+function post_family_config__meko4x4_use_mainline_uboot() {
+	display_alert "$BOARD" "mainline u-boot overrides for $BOARD / $BRANCH" "info"
+
+	declare -g BOOTDELAY=1
+	declare -g BOOTSOURCE="https://github.com/u-boot/u-boot.git"
+	declare -g BOOTBRANCH="tag:v2026.01"
+	declare -g BOOTPATCHDIR="v2026.01"
+	declare -g BOOTDIR="u-boot-${BOARD}"
+
+	declare -g UBOOT_TARGET_MAP="BL31=bl31.elf ROCKCHIP_TPL=${RKBIN_DIR}/${DDR_BLOB};;u-boot-rockchip.bin"
+	unset uboot_custom_postprocess write_uboot_platform write_uboot_platform_mtd
+
+	function write_uboot_platform() {
+		dd "if=$1/u-boot-rockchip.bin" "of=$2" bs=32k seek=1 conv=notrunc status=none
+	}
+
+	declare -g PLYMOUTH="no" # Disable plymouth as that only causes more confusion
+}
 
 function post_family_tweaks__armsom-sige7_naming_audios() {
 	display_alert "$BOARD" "Renaming armsom-sige7 audios" "info"
