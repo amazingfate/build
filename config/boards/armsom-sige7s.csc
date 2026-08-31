@@ -12,6 +12,8 @@ BOOT_FDT_FILE="rockchip/rk3588s-armsom-sige7s.dtb"
 BOOT_SUPPORT_SPI="yes"
 BOOT_SPI_RKSPI_LOADER="yes"
 IMAGE_PARTITION_TABLE="gpt"
+enable_extension "radxa-aic8800"
+AIC8800_TYPE="sdio"
 
 # For current/edge branches:
 display_alert "$BOARD" "applying mainline configuration for $BOARD / $BRANCH" "info"
